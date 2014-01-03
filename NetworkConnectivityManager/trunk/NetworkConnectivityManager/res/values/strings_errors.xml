@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connection_lost">Data Connection Lost\nPlease re-connect and try again.</string>
+    <string name="connection_established">Data Connection Established.</string>
+</resources>
