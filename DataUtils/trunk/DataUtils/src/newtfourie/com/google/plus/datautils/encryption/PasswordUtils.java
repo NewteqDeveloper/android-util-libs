@@ -1,4 +1,4 @@
-package newtfourie.com.google.plus.datautils;
+package newtfourie.com.google.plus.datautils.encryption;
 
 public class PasswordUtils {
 
