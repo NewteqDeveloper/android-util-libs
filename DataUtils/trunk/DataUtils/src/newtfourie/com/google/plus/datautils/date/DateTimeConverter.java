@@ -47,6 +47,55 @@ public class DateTimeConverter {
 	/*********************************************************/
 
 	/**
+	 * Returns today's date as a gregorian calendar object
+	 * @return today's date as a gregorian calendar object
+	 */
+	public GregorianCalendar getToday()
+	{
+		return new GregorianCalendar();
+	}
+	
+	/**
+	 * Returns today's date as a string
+	 * @return today's date as a string
+	 */
+	public String getTodayString()
+	{
+		GregorianCalendar todayDate = new GregorianCalendar();
+		String currentDate = "";
+		String currentYear = String.valueOf(todayDate.get(GregorianCalendar.YEAR));
+		String currentMonth = "", currentDay = "";
+		int intCurrentMonth = Integer.valueOf(todayDate.get(GregorianCalendar.MONTH));
+		int intCurrentDay = Integer.valueOf(todayDate.get(GregorianCalendar.DAY_OF_MONTH));
+		
+		//Month from the gregorian calendar and calendar objects in java are one less than they should be, so increase the number first
+		intCurrentMonth++;
+		//Now add leading zeros to day and month if they are less than 10
+		if (intCurrentMonth < 10)
+		{
+			currentMonth = "0" + String.valueOf(intCurrentMonth);
+		}
+		else
+		{
+			currentMonth = String.valueOf(intCurrentMonth);
+		}
+		
+		if (intCurrentDay < 10)
+		{
+			currentDay = "0" + String.valueOf(intCurrentDay);
+		}
+		else
+		{
+			currentDay = String.valueOf(intCurrentDay);
+		}
+		
+		currentDate = currentYear + "-" + currentMonth + "-" + currentDay;
+		//Log.v("Today's date", currentDate);
+		
+		return currentDate;
+	}
+	
+	/**
 	 * Converts the provided calendar into a string formatted date
 	 * This method excludes time and only returns a date formatted as a string
 	 * @param calendar - the calendar to use
