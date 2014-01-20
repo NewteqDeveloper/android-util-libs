@@ -244,4 +244,55 @@ public class DateTimeConverter {
 		return calendar.get(Calendar.SECOND);
 	}
 	
+	/**
+	 * This method will calculate the number of days difference between the two calendars
+	 * provided. It will take calendar - oldCalendar and calculate how many days are between them
+	 * 
+	 * IMPORTANT: this method expects the date to be in the format yyyy-MM-dd
+	 * this format is provided by the {@link #convertDateToString}
+	 * 
+	 * @param calendar - the first calendar as a string
+	 * @param oldCalendar - the second calendar as a string
+	 * @return number of days as a result from calendar - oldCalendar
+	 */
+	public long dayDifference(String calendar, String oldCalendar) throws ParseException
+	{
+		//check if years are different
+		GregorianCalendar first = convertDateToCalendar(calendar);
+		GregorianCalendar second = convertDateToCalendar(oldCalendar);
+		
+		Date endDate = first.getTime();
+		Date startDate = second.getTime();
+		
+		long endTime = endDate.getTime();
+		long startTime = startDate.getTime();
+		long diffTime = endTime - startTime;
+		
+		long diffDays = diffTime / (1000 * 60 * 60 * 24);
+		
+		return diffDays;
+	}
+	
+	/**
+	 * This method will calculate the number of days difference between the two calendars
+	 * provided. It will take calendar - oldCalendar and calculate how many days are between them
+	 * 
+	 * @param calendar - the first calendar as a string
+	 * @param oldCalendar - the second calendar as a string
+	 * @return number of days as a result from calendar - oldCalendar
+	 */
+	public long dayDifference(GregorianCalendar calendar, GregorianCalendar oldCalendar)
+	{
+		Date endDate = calendar.getTime();
+		Date startDate = oldCalendar.getTime();
+		
+		long endTime = endDate.getTime();
+		long startTime = startDate.getTime();
+		long diffTime = endTime - startTime;
+		
+		long diffDays = diffTime / (1000 * 60 * 60 * 24);
+		
+		return diffDays;
+	}
+	
 }
