@@ -245,6 +245,86 @@ public class DateTimeConverter {
 	}
 	
 	/**
+	 * Gets a string formatted time from a new greogrian calendar
+	 * @return - a string formatted result of the time from the calendar
+	 */
+	public String getCurrentTime()
+	{
+		GregorianCalendar calendar = new GregorianCalendar();
+		
+		String strHour;
+		String strMin;
+		String strSec;
+		
+		int hour = getHourFromCalendar(calendar);
+		int min = getMinFromCalendar(calendar);
+		int sec = getSecFromCalendar(calendar);
+		
+		String toReturn;
+		
+		if (hour < 10)
+		{
+			strHour = "0" + hour;
+		}
+		else
+		{
+			strHour = hour + "";
+		}
+		if (min < 10)
+		{
+			strMin = "0" + min;
+		}
+		else
+		{
+			strMin = min + "";
+		}
+		if (sec < 10)
+		{
+			strSec = "0" + sec;
+		}
+		else
+		{
+			strSec = sec + "";
+		}
+		toReturn = strHour + ":" + strMin + ":" + strSec;
+		
+		return toReturn;
+	}
+	
+	/**
+	 * Returns the hour from the current time (using new gregorian calendar)
+	 * @return - the hour from the calendar
+	 */
+	public int getCurrentHour()
+	{
+		GregorianCalendar calendar = new GregorianCalendar();
+		
+		return calendar.get(Calendar.HOUR_OF_DAY);
+	}
+	
+	/**
+	 * Returns the min from the current time (using new gregorian calendar)
+	 * @return - the min from the calendar 
+	 */
+	public int getCurrentMin()
+	{
+		GregorianCalendar calendar = new GregorianCalendar();
+		
+		return calendar.get(Calendar.MINUTE);
+	}
+	
+	/**
+	 * Returns the sec from the current time (using new gregorian calendar)
+	 * @return - the sec from the calendar
+	 */
+	public int getCurrentSec()
+	{
+		GregorianCalendar calendar = new GregorianCalendar();
+		
+		return calendar.get(Calendar.SECOND);
+	}
+	
+	/**
 	 * This method will calculate the number of days difference between the two calendars
 	 * provided. It will take calendar - oldCalendar and calculate how many days are between them
 	 * 
@@ -293,6 +373,44 @@ public class DateTimeConverter {
 		long diffDays = diffTime / (1000 * 60 * 60 * 24);
 		
 		return diffDays;
+	}
+	
+	/**
+	 * This method will compare the two dates provided in a string format as (yyyy-MM-dd). see {@link #convertDateToString(GregorianCalendar)}
+	 * It follows the normal compare standard whereby it will
+	 * return val > 0 if dateOne > dateTwo
+	 * return val = 0 if dateOne = dateTwo
+	 * return val < 0 if dateOne < dateTwo
+	 * @param dateOne - the first date to compare
+	 * @param dateTwo - the second date to compare
+	 * @return a comparison integer
+	 * @throws ParseException - if the string date's provided are not in the correct format
+	 */
+	public int compareDateStrings(String dateOne, String dateTwo) throws ParseException
+	{
+		GregorianCalendar date = convertDateToCalendar(dateOne);
+		GregorianCalendar anotherDate = convertDateToCalendar(dateTwo);
+		
+		return date.compareTo(anotherDate);
+	}
+	
+	/**
+	 * This method will compare the two times provided in a string format as (hh:mm:ss). see {@link #getTimeFromCalendar(GregorianCalendar)}
+	 * It follows the normal compare standard whereby it will
+	 * return val > 0 if timeOne > timeTwo
+	 * return val = 0 if timeOne = timeTwo
+	 * return val < 0 if timeOne < timeTwo
+	 * @param dateOne - the first time to compare
+	 * @param dateTwo - the second time to compare
+	 * @return a comparison integer
+	 * @throws ParseException - if the string time's provided are not in the correct format
+	 */
+	public int compareTimeStrings(String timeOne, String timeTwo) throws ParseException
+	{
+		GregorianCalendar date = convertTimeToCalendar(timeOne);
+		GregorianCalendar anotherDate = convertTimeToCalendar(timeTwo);
+		
+		return date.compareTo(anotherDate);
 	}
 	
 }
