@@ -1,10 +1,15 @@
 package newtfourie.com.google.plus.networkconnectivity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 /**
  * This class will access the network and provide feedback on it
@@ -49,6 +54,7 @@ public class NetworkControl {
 	/*********************************************************/
 	
 	private static Context context;
+	private static final String TAG = "NetworkControl";
 	
 	/**********************************************************/
 	/*********************************************************/
@@ -99,6 +105,96 @@ public class NetworkControl {
 			return true;
 		else
 			return false;
+	}
+	
+	/**
+	 * Make sure that this is only called when you have got the correct permissions in the manifest
+	 * and that you have asked the user for permission. The application will crash if you do not
+	 * have the correct permissions in the manifest.
+	 * 
+	 * This will enable the user's mobile data
+	 */
+	public boolean enableMobileData()
+	{
+	    try
+	    {
+			final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		    final Class<?> conmanClass = Class.forName(conman.getClass().getName());
+		    final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
+		    connectivityManagerField.setAccessible(true);
+		    final Object connectivityManager = connectivityManagerField.get(conman);
+		    final Class<?> connectivityManagerClass =  Class.forName(connectivityManager.getClass().getName());
+		    final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+		    setMobileDataEnabledMethod.setAccessible(true);
+		    
+		    setMobileDataEnabledMethod.invoke(connectivityManager, true);
+		    
+		    return true;
+	    }
+	    catch (Exception ex)
+	    {
+	    	Log.e(TAG, ex.getLocalizedMessage());
+	    	ex.printStackTrace();
+	    	return false;
+	    }
+	}
+	
+	/**
+	 * Make sure that this is only called when you have got the correct permissions in the manifest
+	 * and that you have asked the user for permission. The application will crash if you do not
+	 * have the correct permissions in the manifest.
+	 * 
+	 * This will disable the user's mobile data
+	 */
+	public boolean disableMobileData()
+	{
+	    try
+	    {
+			final ConnectivityManager conman = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		    final Class<?> conmanClass = Class.forName(conman.getClass().getName());
+		    final Field connectivityManagerField = conmanClass.getDeclaredField("mService");
+		    connectivityManagerField.setAccessible(true);
+		    final Object connectivityManager = connectivityManagerField.get(conman);
+		    final Class<?> connectivityManagerClass =  Class.forName(connectivityManager.getClass().getName());
+		    final Method setMobileDataEnabledMethod = connectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+		    setMobileDataEnabledMethod.setAccessible(true);
+		    
+		    setMobileDataEnabledMethod.invoke(connectivityManager, false);
+		    
+		    return true;
+	    }
+	    catch (Exception ex)
+	    {
+	    	Log.e(TAG, ex.getLocalizedMessage());
+	    	ex.printStackTrace();
+	    	return false;
+	    }
+	}
+	
+	/**
+	 * Make sure that this is only called when you have got the correct permissions in the manifest
+	 * and that you have asked the user for permission. The application will crash if you do not
+	 * have the correct permissions in the manifest
+	 * 
+	 * This will disconnect the user's wifi
+	 */
+	public void disconnectWifi()
+	{
+		 WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		 wifi.disconnect();
+	}
+	
+	/**
+	 * Make sure that this is only called when you have got the correct permissions in the manifest
+	 * and that you have asked the user for permission. The application will crash if you do not
+	 * have the correct permissions in the manifest
+	 * 
+	 * This will reconnect the user's wifi
+	 */
+	public void reconnectWifi()
+	{
+		 WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		 wifi.reconnect();
 	}
 	
 	/**********************************************************/
