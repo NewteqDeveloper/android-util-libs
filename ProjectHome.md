@@ -1,0 +1,1 @@
+This project contains libraries to aid in making android development faster, with libs like EasyToast which allows you to easily make a toast on an app, by simply having: EasyToast.toastLong(context, message); or EasyToast.toastShort(context, message);
